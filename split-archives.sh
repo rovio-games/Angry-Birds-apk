@@ -3,8 +3,8 @@ DIRNAME="$(dirname "$(realpath "$BASH_SOURCE")")"
 source "$DIRNAME/dirs.sh"
 source "$DIRNAME/games.sh"
 
-githubFileSizeLimit=49000000 # < 50 MB
-splitFlags="-d -a 2 -b $githubFileSizeLimit"
+GITHUB_FILE_SIZE_LIMIT=49000000 # < 50 MB
+splitFlags="-d -a 2 -b $GITHUB_FILE_SIZE_LIMIT"
 
 # Usage: split_archive "<archive_path>" "<target_directory>"
 function split_archive {
@@ -17,20 +17,17 @@ function split_archive {
 }
 
 function split_all {
-    for i in $(seq 0 $(expr ${#GAMES[@]} - 1))
+    local IFS="$(echo -en "\n\b")"
+    local archives=($(find "$DIRNAME/$EXTRACTED_DIR" -regex ".*.x?apk"))
+    unset IFS
+
+    for i in $(seq 0 $(expr ${#archives[@]} - 1))
     do
-        local game="${GAMES[i]}"
-        local apkFile="$(find "$DIRNAME/$EXTRACTED_DIR" -name "$game*.apk" | head -n 1)"
+        local archive="${archives[i]}"
+        local game="$(basename "$archive")"
+        game="${game%%_*}"
 
-        if [[ -z "$apkFile" ]]
-        then
-            echo "ERROR: No APK file found for the game \"$game\". Skipped." >&2
-            continue
-        fi
-
-        local targetDir="$DIRNAME/$SPLIT_DIR/$game"
-
-        split_archive "$apkFile" "$targetDir"
+        split_archive "$archive" "$DIRNAME/$SPLIT_DIR/$game"
     done
 }
 

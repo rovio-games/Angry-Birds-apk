@@ -21,6 +21,13 @@ function split_all {
     do
         local game="${GAMES[i]}"
         local apkFile="$(find "$DIRNAME/$EXTRACTED_DIR" -name "$game*.apk" | head -n 1)"
+
+        if [[ -z "$apkFile" ]]
+        then
+            echo "ERROR: No APK file found for the game \"$game\". Skipped." >&2
+            continue
+        fi
+
         local targetDir="$DIRNAME/$SPLIT_DIR/$game"
 
         split_archive "$apkFile" "$targetDir"

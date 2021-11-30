@@ -30,7 +30,12 @@ function split_all {
         local game="$(basename "$archive")"
         game="${game%%_*}"
 
-        split_archive "$archive" "$DIRNAME/$SPLIT_DIR/$game"
+        split_archive "$archive" "$DIRNAME/$SPLIT_DIR/$game" &
+    done
+
+    for archive in "${archives[@]}"
+    do
+        wait -n
     done
 }
 

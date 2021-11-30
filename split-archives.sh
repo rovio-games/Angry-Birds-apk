@@ -35,7 +35,7 @@ function split_all {
 
     for archive in "${archives[@]}"
     do
-        wait -n
+        wait -fn
     done
 }
 

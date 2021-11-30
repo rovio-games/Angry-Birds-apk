@@ -4,7 +4,7 @@ source "$DIRNAME/dirs.sh"
 source "$DIRNAME/games.sh"
 
 # Concatenate split archives into a .apk or .xapk file, using the "cat" program
-# Usage: split_archive "<source_directory>" "<target_directory>"
+# Usage: concat_archive "<source_directory>" "<target_directory>"
 # Note: Source directory must only consist of split archives of the original archive, with suffixes 00, 01, 02, ...
 function concat_archive {
     local srcDir="$1" targetDir="$2"
@@ -20,8 +20,11 @@ function concat_archive {
     IFS="$OLD_IFS"
 }
 
+# concatenate all split archives
+# Usage: concat_all "<source_directory>" "<target_directory>"
 function concat_all {
-    local targetDir="$DIRNAME/$EXTRACTED_DIR"
+    local srcDir="$1" targetDir="$2"
+
     mkdir -p "$targetDir"
 
     for game in "${GAMES[@]}"
@@ -35,5 +38,3 @@ function concat_all {
         wait -fn
     done
 }
-
-concat_all

@@ -17,9 +17,12 @@ function split_archive {
 }
 
 function split_all {
+    declare -r OLD_IFS="$IFS"
     local IFS="$(echo -en "\n\b")"
+
     local archives=($(find "$DIRNAME/$EXTRACTED_DIR" -regex ".*.x?apk"))
-    unset IFS
+
+    IFS="$OLD_IFS"
 
     for i in $(seq 0 $(expr ${#archives[@]} - 1))
     do

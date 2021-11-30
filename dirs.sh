@@ -1,2 +1,0 @@
-EXTRACTED_DIR=extracted
-SPLIT_DIR=split-archives

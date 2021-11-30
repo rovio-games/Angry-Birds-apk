@@ -25,9 +25,8 @@ function split_all {
 
     IFS="$OLD_IFS"
 
-    for i in $(seq 0 $(expr ${#archives[@]} - 1))
+    for archive in "${archives[@]}"
     do
-        local archive="${archives[i]}"
         local game="$(basename "$archive")"
         game="${game%%_*}"
 

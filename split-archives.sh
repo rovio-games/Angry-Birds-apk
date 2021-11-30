@@ -1,6 +1,17 @@
+if [[ $# -lt 2 ]]
+then
+    echo "Usage: \"$BASH_SOURCE\" <source_directory> <target_directory>" >&2
+    echo "* <source_directory>: The source directory containing all .apk or .xapk files" >&2
+    echo "* <target_directory>: The target directory for split archives, will include several sub-directories, each containing the splits for a single game" >&2
+
+    exit 1
+else
+    srcDir="$1"
+    targetDir="$2"
+fi
+
 DIRNAME="$(dirname "$(realpath "$BASH_SOURCE")")"
 
-source "$DIRNAME/dirs.sh"
 source "$DIRNAME/games.sh"
 
 GITHUB_FILE_SIZE_LIMIT=49000000 # < 50 MB
@@ -18,10 +29,12 @@ function split_archive {
 }
 
 function split_all {
+    local srcDir="$1" targetDir="$2"
+
     declare -r OLD_IFS="$IFS"
     local IFS="$(echo -en "\n\b")"
 
-    local archives=($(find "$DIRNAME/$EXTRACTED_DIR" -regex ".*.x?apk"))
+    local archives=($(find "$srcDir" -regex ".*.x?apk"))
 
     IFS="$OLD_IFS"
 
@@ -30,7 +43,8 @@ function split_all {
         local game="$(basename "$archive")"
         game="${game%%_*}"
 
-        split_archive "$archive" "$DIRNAME/$SPLIT_DIR/$game" &
+        local splitDir="$targetDir/$game"
+        split_archive "$archive" "$splitDir" &
     done
 
     for archive in "${archives[@]}"
@@ -39,4 +53,4 @@ function split_all {
     done
 }
 
-split_all
+split_all "$srcDir" "$targetDir"

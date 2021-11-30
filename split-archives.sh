@@ -6,6 +6,7 @@ source "$DIRNAME/games.sh"
 GITHUB_FILE_SIZE_LIMIT=49000000 # < 50 MB
 splitFlags="-d -a 2 -b $GITHUB_FILE_SIZE_LIMIT"
 
+# Split an archive using the "split" program
 # Usage: split_archive "<archive_path>" "<target_directory>"
 function split_archive {
     local archivePath="$1" targetDir="$2"

@@ -8,8 +8,14 @@ SPLIT_EXEC := split-archives.sh
 all: concat
 
 .PHONY: concat
-concat:
+concat: $(FULL_DIR)
+
+$(FULL_DIR):
 	bash $(CONCAT_EXEC) $(SPLIT_DIR) $(FULL_DIR)
+
+.PHONY: split
+split: $(FULL_DIR)
+	bash $(SPLIT_EXEC) $(FULL_DIR) $(SPLIT_DIR)
 
 .PHONY: clean
 clean:

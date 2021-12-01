@@ -47,10 +47,7 @@ function split_all {
         split_archive "$archive" "$splitDir" &
     done
 
-    for archive in "${archives[@]}"
-    do
-        wait -fn
-    done
+    wait
 }
 
 split_all "$srcDir" "$targetDir"

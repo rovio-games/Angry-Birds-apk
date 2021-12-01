@@ -44,10 +44,7 @@ function concat_all {
         concat_archive "$splitDir" "$targetDir" &
     done
 
-    for game in "${GAMES[@]}"
-    do
-        wait -fn
-    done
+    wait
 }
 
 concat_all "$srcDir" "$targetDir"

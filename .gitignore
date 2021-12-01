@@ -2,3 +2,5 @@
 *.xapk
 
 extracted/
+
+.vscode/

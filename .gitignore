@@ -1,6 +1,5 @@
+.vscode/
+
+full-archives/
 *.apk
 *.xapk
-
-extracted/
-
-.vscode/

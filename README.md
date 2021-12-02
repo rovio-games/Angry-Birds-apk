@@ -4,6 +4,8 @@ APK for Angry Birds games that are no longer updated and no longer found in Goog
 * Angry Birds Seasons
 * Angry Birds Rio
 * Angry Birds Space
+* Angry Birds Star Wars
+* Angry Birds Star Wars II Free
 
 # How to use
 
